@@ -1,0 +1,328 @@
+{
+  "info": {
+    "_postman_id": "12345678-1234-1234-1234-123456789abc",
+    "name": "Project Management API",
+    "description": "API for managing projects and tasks.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "User Registration",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"string\", \"password\": \"string\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/register",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["users", "register"]
+            }
+          },
+          "response": [
+            {
+              "code": 201,
+              "body": "{\"message\": \"User registered successfully\"}"
+            },
+            {
+              "code": 400,
+              "body": "{\"message\": \"Error message\"}"
+            }
+          ]
+        },
+        {
+          "name": "User Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"username\": \"string\", \"password\": \"string\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/login",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["users", "login"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "{\"token\": \"JWT token\"}"
+            },
+            {
+              "code": 401,
+              "body": "{\"message\": \"Invalid credentials\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Create a New Project",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"string\", \"description\": \"string\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects"]
+            }
+          },
+          "response": [
+            {
+              "code": 201,
+              "body": "{\"_id\": \"string\", \"title\": \"string\", \"description\": \"string\", \"userId\": \"string\", \"tasks\": []}"
+            },
+            {
+              "code": 400,
+              "body": "{\"message\": \"Error message\"}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "[{\"_id\": \"string\", \"title\": \"string\", \"description\": \"string\", \"userId\": \"string\", \"tasks\": []}]"
+            }
+          ]
+        },
+        {
+          "name": "Get a Specific Project",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:id",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects", ":id"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "{\"_id\": \"string\", \"title\": \"string\", \"description\": \"string\", \"userId\": \"string\", \"tasks\": []}"
+            },
+            {
+              "code": 404,
+              "body": "{\"message\": \"Project not found\"}"
+            }
+          ]
+        },
+        {
+          "name": "Update a Project",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"string\", \"description\": \"string\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:id",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects", ":id"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "{\"_id\": \"string\", \"title\": \"string\", \"description\": \"string\", \"userId\": \"string\", \"tasks\": []}"
+            },
+            {
+              "code": 404,
+              "body": "{\"message\": \"Project not found\"}"
+            }
+          ]
+        },
+        {
+          "name": "Delete a Project",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:id",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects", ":id"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "{\"message\": \"Project deleted successfully\"}"
+            },
+            {
+              "code": 404,
+              "body": "{\"message\": \"Project not found\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tasks",
+      "item": [
+        {
+          "name": "Create a New Task",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"description\": \"string\", \"status\": \"pending/in-progress/completed\", \"priority\": \"low/medium/high\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:projectId/tasks",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects", ":projectId", "tasks"]
+            }
+          },
+          "response": [
+            {
+              "code": 201,
+              "body": "{\"_id\": \"string\", \"description\": \"string\", \"status\": \"string\", \"priority\": \"string\", \"projectId\": \"string\"}"
+            },
+            {
+              "code": 400,
+              "body": "{\"message\": \"Error message\"}"
+            }
+          ]
+        },
+        {
+          "name": "Get All Tasks for a Project",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/projects/:projectId/tasks",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["projects", ":projectId", "tasks"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "[{\"_id\": \"string\", \"description\": \"string\", \"status\": \"string\", \"priority\": \"string\", \"projectId\": \"string\"}]"
+            }
+          ]
+        },
+        {
+          "name": "Update a Task",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"description\": \"string\", \"status\": \"pending/in-progress/completed\", \"priority\": \"low/medium/high\"}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/tasks/:id",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["tasks", ":id"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "{\"_id\": \"string\", \"description\": \"string\", \"status\": \"string\", \"priority\": \"string\", \"projectId\": \"string\"}"
+            },
+            {
+              "code": 404,
+              "body": "{\"message\": \"Task not found\"}"
+            }
+          ]
+        },
+        {
+          "name": "Delete a Task",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/tasks/:id",
+              "host": ["{{baseUrl}}/api"],
+              "path": ["tasks", ":id"]
+            }
+          },
+          "response": [
+            {
+              "code": 200,
+              "body": "{\"message\": \"Task deleted successfully\"}"
+            },
+            {
+              "code": 404,
+              "body": "{\"message\": \"Task not found\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
